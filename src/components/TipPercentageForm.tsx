@@ -1,4 +1,5 @@
-import type { Dispatch, SetStateAction } from "react";
+import { Dispatch } from "react";
+import { OrderActions } from "../reducers/order-reducer";
 
 const tipOptions = [
   {
@@ -20,12 +21,12 @@ const tipOptions = [
 
 type TipPercentageFormProps = {
   tip: number;
-  setTip: Dispatch<SetStateAction<number>>;
+  dispatch: Dispatch<OrderActions>;
 };
 
 export default function TipPercentageForm({
   tip,
-  setTip,
+  dispatch,
 }: TipPercentageFormProps) {
   return (
     <div>
@@ -35,7 +36,12 @@ export default function TipPercentageForm({
           <div key={tipOption.id} className="flex gap-2">
             <label htmlFor={tipOption.id}>{tipOption.label}</label>
             <input
-              onChange={(e) => setTip(+e.target.value)}
+              onChange={(e) =>
+                dispatch({
+                  type: "add-tip",
+                  payload: { value: +e.target.value },
+                })
+              }
               id={tipOption.id}
               type="radio"
               name="tip"
